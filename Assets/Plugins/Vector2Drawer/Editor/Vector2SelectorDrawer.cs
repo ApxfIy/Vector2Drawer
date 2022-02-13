@@ -61,7 +61,6 @@ namespace Apxfly.Editor.CustomDrawers
 
         private void Handle(Rect position)
         {
-            Debug.Log(CurrentEventType());
             switch (CurrentEventType())
             {
                 case EventType.MouseDown:
