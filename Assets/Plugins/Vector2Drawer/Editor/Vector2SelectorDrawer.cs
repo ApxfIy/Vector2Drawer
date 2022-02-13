@@ -1,7 +1,9 @@
+using Apxfly.Editor.Attributes;
+using Apxfly.Editor.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Apxfly.CustomInspector.Editor
+namespace Apxfly.Editor.CustomDrawers
 {
     [CustomPropertyDrawer(typeof(Vector2Selector))]
     public class Vector2SelectorDrawer : PropertyDrawer
@@ -59,6 +61,7 @@ namespace Apxfly.CustomInspector.Editor
 
         private void Handle(Rect position)
         {
+            Debug.Log(CurrentEventType());
             switch (CurrentEventType())
             {
                 case EventType.MouseDown:
@@ -111,7 +114,7 @@ namespace Apxfly.CustomInspector.Editor
         {
             var mousePosition = Event.current.mousePosition;
 
-            if (!IsInsideCircle(_circleCenter, CircleRadius, mousePosition)) return;
+            if (!IsFocusLocked() && !IsInsideCircle(_circleCenter, CircleRadius, mousePosition)) return;
 
             var delta = Event.current.delta.y;
 
@@ -124,6 +127,7 @@ namespace Apxfly.CustomInspector.Editor
             _currentScale = newScale;
 
             CurrentEvent().Use();
+
         }
 
         private void OnRepaint(Rect position)
