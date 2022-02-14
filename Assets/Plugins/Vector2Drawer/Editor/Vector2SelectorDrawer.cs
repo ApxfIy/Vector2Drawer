@@ -111,7 +111,7 @@ namespace Apxfly.Editor.CustomDrawers
 
         private void OnScrollWheel()
         {
-            var delta = GetValue().y > 0 ? -Event.current.delta.y : Event.current.delta.y;
+            var delta = -Event.current.delta.y;
 
             var newScale = Mathf.Clamp(_currentScale + delta * GetScrollSensitivity(), 0.01f, 1000f);
 
@@ -188,13 +188,13 @@ namespace Apxfly.Editor.CustomDrawers
 
         private static float GetScrollSensitivity()
         {
-            const float defaultSensitivity = 1f;
+            const float defaultSensitivity = 0.4f;
 
             if (IsShift)
-                return defaultSensitivity * 10f;
+                return defaultSensitivity * 5f;
 
             if (IdCtrl)
-                return defaultSensitivity * 0.1f;
+                return defaultSensitivity * 0.2f;
 
             return defaultSensitivity;
         }
