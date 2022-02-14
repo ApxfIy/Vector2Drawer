@@ -96,7 +96,7 @@ namespace Apxfly.Editor.CustomDrawers
 
             if (!IsFocusLocked()) return;
 
-            var newPosition = mousePosition - _circleCenter;
+            var newPosition = (mousePosition - _circleCenter).normalized * CircleRadius;
             SetValue(new Vector2(newPosition.x, -newPosition.y) * _currentScale);
 
             CurrentEvent().Use();
@@ -111,11 +111,7 @@ namespace Apxfly.Editor.CustomDrawers
 
         private void OnScrollWheel()
         {
-            var mousePosition = Event.current.mousePosition;
-
-            if (!IsFocusLocked() && !IsInsideCircle(_circleCenter, CircleRadius, mousePosition)) return;
-
-            var delta = Event.current.delta.y;
+            var delta = GetValue().y > 0 ? -Event.current.delta.y : Event.current.delta.y;
 
             var newScale = Mathf.Clamp(_currentScale + delta * GetScrollSensitivity(), 0.01f, 1000f);
 
@@ -126,7 +122,6 @@ namespace Apxfly.Editor.CustomDrawers
             _currentScale = newScale;
 
             CurrentEvent().Use();
-
         }
 
         private void OnRepaint(Rect position)
